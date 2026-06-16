@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>むしゃどん杯 | ブキコスト制大会</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="むしゃどん杯 | ブキコスト制大会">
+    <meta property="og:description" content="独自のブキコスト制ルールを採用したスプラトゥーン3大会！4月4日開催。">
+    <meta property="og:image" content="https://mushadon.github.io/mushadoncup-for-spring/mushadon杯七大学.jpg">
+
+    <!-- Google Fonts: 軽量サブセット -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== リセット & ベース ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --c-bg: #1e1e2e;
+            --c-surface: rgba(30, 30, 50, 0.85);
+            --c-border: rgba(255,255,255,0.10);
+            --c-text: #e8e8f0;
+            --c-muted: #a0a0b8;
+            --c-indigo: #818cf8;
+            --c-pink: #f472b6;
+            --c-grad: linear-gradient(90deg, #818cf8, #f472b6);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --section-gap: 28px;
+            --pad: 16px;
+        }
+
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            line-height: 1.7;
+            font-size: 15px;
+            overflow-x: hidden;
+        }
+
+        /* iOS含む全環境で背景を固定するレイヤー */
+        #bg-fixed {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("田植え.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            background-color: var(--c-bg);
+            pointer-events: none;
+        }
+
+        /* ===== 背景レイヤー（軽量化: blur削減） ===== */
+        .bg-orb {
+            position: fixed; pointer-events: none; border-radius: 50%;
+            filter: blur(80px); opacity: 0.18; z-index: 0;
+        }
+        .bg-orb--indigo { width: 320px; height: 320px; background: #818cf8; top: -10%; left: -15%; }
+        .bg-orb--pink   { width: 280px; height: 280px; background: #f472b6; bottom: -10%; right: -15%; }
+
+        /* ===== レイアウト ===== */
+        .container {
+            position: relative; z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 20px var(--pad) 100px;
+        }
+
+        /* ===== カード ===== */
+        .card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .card-pad { padding: 20px var(--pad); }
+
+        /* ===== テキスト ===== */
+        .gradient-text {
+            background: var(--c-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .kicker {
+            display: inline-block;
+            color: #f9a8d4;
+            letter-spacing: 0.2em;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        h2 { font-size: 1.5rem; font-weight: 900; line-height: 1.3; }
+        h3 { font-size: 1.1rem; font-weight: 700; }
+
+        /* ===== ナビゲーション ===== */
+        #nav-toggle { display: none; }
+
+        .nav-label {
+            display: flex; align-items: center; gap: 6px;
+            cursor: pointer;
+            padding: 10px 18px;
+            background: rgba(0,0,0,0.45);
+            border: 1px solid var(--c-border);
+            border-radius: 9999px;
+            width: fit-content;
+            margin: 0 auto 16px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fbcfe8;
+            min-height: 44px;
+        }
+
+        .nav-arrow { transition: transform 0.25s; }
+        #nav-toggle:checked ~ .nav-label .nav-arrow { transform: rotate(180deg); }
+
+        .quick-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        #nav-toggle:checked ~ .quick-nav {
+            max-height: 320px;
+            opacity: 1;
+            pointer-events: auto;
+            margin-bottom: 24px;
+        }
+
+        .quick-nav a {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 44px;
+            padding: 10px 8px;
+            border-radius: var(--radius-sm);
+            background: rgba(0,0,0,0.35);
+            color: var(--c-text);
+            text-decoration: none;
+            border: 1px solid var(--c-border);
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .quick-nav a:active { background: rgba(129,140,248,0.25); }
+
+        /* ===== ヘッダー ===== */
+        .header-wrap {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            padding: 24px 16px;
+            text-align: center;
+            margin-bottom: var(--section-gap);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .header-wrap h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .header-sub {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header-desc {
+            color: var(--c-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        /* ===== CTAボタン ===== */
+        .cta-wrap {
+            display: flex; flex-direction: column; gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 48px;
+            padding: 12px 20px;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.15s;
+        }
+        .btn:active { opacity: 0.8; }
+
+        .btn-primary {
+            background: var(--c-grad);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--c-border);
+            color: var(--c-text);
+        }
+
+        /* ===== セクション共通 ===== */
+        .section-gap { margin-bottom: var(--section-gap); }
+
+        /* ===== スケジュール ===== */
+        .schedule-date {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .schedule-item {
+            padding: 14px 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .schedule-item--a { background: rgba(55,55,80,0.6); }
+        .schedule-item--b { background: rgba(49,46,129,0.4); color: #a5b4fc; }
+
+        /* ===== 特徴グリッド ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .feature-card {
+            padding: 16px 14px;
+            border-radius: var(--radius-sm);
+            background: rgba(30,30,50,0.7);
+            border: 1px solid var(--c-border);
+        }
+
+        .feature-num {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #a5b4fc;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .feature-card h3 { font-size: 0.95rem; margin-bottom: 6px; }
+        .feature-card p  { font-size: 0.82rem; color: var(--c-muted); line-height: 1.6; }
+
+        /* ===== サマリー3カラム ===== */
+        .summary-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .summary-card {
+            padding: 14px 10px;
+            border-radius: var(--radius-sm);
+            background: rgba(20,20,40,0.55);
+            border: 1px solid var(--c-border);
+        }
+        .summary-card h3 { font-size: 0.82rem; margin-bottom: 4px; }
+        .summary-card p  { font-size: 0.82rem; color: var(--c-muted); }
+
+        /* ===== コストルール ===== */
+        .cost-block {
+            background: rgba(20,20,40,0.6);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+
+        .cost-block h3 {
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .cost-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--c-muted);
+        }
+
+        .badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 30px; height: 24px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .badge--pink   { background: #db2777; }
+        .badge--indigo { background: #4f46e5; }
+
+        .flow-list {
+            background: rgba(10,10,25,0.5);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .flow-list h3 { margin-bottom: 12px; font-size: 1rem; }
+
+        .flow-item {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--c-border);
+            font-size: 0.88rem;
+            color: var(--c-muted);
+        }
+        .flow-item:last-child { border-bottom: none; }
+
+        .flow-num {
+            display: flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; min-width: 26px;
+            background: rgba(129,140,248,0.15);
+            border: 1px solid #818cf8;
+            border-radius: 50%;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #818cf8;
+        }
+
+        .text-red    { color: #f87171; }
+        .text-green  { color: #4ade80; }
+        .text-indigo { color: #a5b4fc; }
+        .text-pink   { color: #f9a8d4; }
+        .text-yellow { color: #fbbf24; }
+
+        /* ===== 細則 ===== */
+        .rule-block { margin-bottom: 18px; }
+        .rule-block h3 { font-size: 1rem; margin-bottom: 8px; color: var(--c-indigo); }
+        .rule-block ul {
+            list-style: none; padding: 0;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .rule-block li {
+            font-size: 0.87rem;
+            color: var(--c-muted);
+            padding-left: 14px;
+            position: relative;
+            line-height: 1.65;
+        }
+        .rule-block li::before {
+            content: '▸';
+            position: absolute; left: 0;
+            color: #818cf8;
+        }
+
+        /* ===== 写真賞バナー ===== */
+        .photo-award-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: linear-gradient(135deg, rgba(251,191,36,0.12), rgba(244,114,182,0.10));
+            border: 1px solid rgba(251,191,36,0.35);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .photo-award-icon {
+            font-size: 2rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .photo-award-body h3 {
+            font-size: 0.95rem;
+            color: #fbbf24;
+            margin-bottom: 6px;
+        }
+
+        .photo-award-body p {
+            font-size: 0.85rem;
+            color: var(--c-muted);
+            line-height: 1.7;
+        }
+
+        /* ===== FAQ ===== */
+        .faq-item {
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.93rem;
+            padding: 14px 16px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            min-height: 48px;
+            background: rgba(20,20,40,0.5);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .faq-item summary::after {
+            content: '▾';
+            flex-shrink: 0;
+            color: #818cf8;
+            transition: transform 0.2s;
+        }
+
+        .faq-item[open] summary::after { transform: rotate(180deg); }
+
+        .faq-body {
+            padding: 12px 16px 14px;
+            font-size: 0.87rem;
+            color: var(--c-muted);
+            line-height: 1.75;
+            background: rgba(10,10,25,0.4);
+        }
+
+        /* ===== スタッフ ===== */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .staff-card {
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            background: rgba(20,20,40,0.55);
+            border: 1px solid var(--c-border);
+        }
+        .staff-card h3 { font-size: 0.9rem; margin-bottom: 8px; }
+        .staff-card p, .staff-card li { font-size: 0.85rem; color: var(--c-muted); }
+        .staff-card ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+        /* ===== エントリー ===== */
+        .entry-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .step-card {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            background: rgba(15,15,35,0.5);
+            border: 1px solid var(--c-border);
+        }
+
+        .step-num {
+            display: flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; min-width: 32px;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 0.85rem;
+        }
+        .step-num--opt { background: rgba(100,100,120,0.4); color: var(--c-muted); }
+        .step-num--req { background: var(--c-grad); color: #fff; }
+        .step-num--day { background: rgba(244,114,182,0.2); border: 1px solid #f472b6; color: #f9a8d4; }
+
+        .step-content h3 { font-size: 0.95rem; margin-bottom: 4px; }
+        .step-content p  { font-size: 0.85rem; color: var(--c-muted); line-height: 1.65; }
+
+        .tag-opt { font-size: 0.72rem; color: var(--c-muted); margin-bottom: 2px; }
+
+        /* ===== フローティングCTA ===== */
+        .floating-cta {
+            position: fixed;
+            left: 12px; right: 12px; bottom: 12px;
+            z-index: 100;
+        }
+
+        .floating-cta a {
+            display: flex; align-items: center; justify-content: center;
+            height: 54px;
+            border-radius: 9999px;
+            font-weight: 900;
+            font-size: 1rem;
+            color: #fff;
+            text-decoration: none;
+            background: var(--c-grad);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .floating-cta a:active { opacity: 0.85; }
+
+        /* ===== フッター ===== */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding: 18px 14px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--c-border);
+            border-radius: var(--radius);
+            font-size: 0.78rem;
+            color: var(--c-muted);
+            line-height: 1.75;
+        }
+
+        .footer a { color: inherit; text-decoration: underline; }
+
+        /* ===== ピンクボーダー強調 ===== */
+        .border-pink { border-color: rgba(244, 114, 182, 0.4) !important; border-width: 2px !important; }
+        .border-indigo { border-color: rgba(129, 140, 248, 0.35) !important; border-width: 2px !important; }
+
+        /* ===== PC向け ===== */
+        @media (min-width: 600px) {
+            .cta-wrap { flex-direction: row; justify-content: center; }
+            .entry-steps { grid-template-columns: repeat(3, 1fr); }
+            .staff-grid { grid-template-columns: repeat(3, 1fr); }
+            .header-wrap h1 { font-size: 3.5rem; }
+        }
+
+        @media (min-width: 900px) {
+            :root {
+                --section-gap: 40px;
+                --pad: 32px;
+            }
+
+            body { font-size: 16px; }
+
+            .container {
+                max-width: 1000px;
+                padding: 40px 40px 120px;
+            }
+
+            .nav-label { display: none !important; }
+            .quick-nav {
+                display: flex !important;
+                flex-wrap: wrap;
+                max-height: none !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                margin-bottom: 32px;
+                gap: 10px;
+                grid-template-columns: none;
+            }
+            .quick-nav a {
+                border-radius: 9999px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                min-height: 40px;
+            }
+
+            .header-wrap { padding: 48px 40px; }
+            .header-wrap h1 { font-size: 5rem; }
+            .header-sub { font-size: 1.2rem; }
+            .header-desc { font-size: 1rem; }
+            .cta-wrap { gap: 14px; }
+            .btn { font-size: 1rem; padding: 14px 28px; }
+
+            .card-pad { padding: 36px 40px; }
+
+            .schedule-date { font-size: 2.8rem; }
+            .schedule-item { font-size: 1.1rem; padding: 20px; }
+
+            .features-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+            .feature-num { font-size: 2rem; }
+            .feature-card h3 { font-size: 1rem; }
+            .feature-card p  { font-size: 0.88rem; }
+
+            .summary-row { gap: 16px; }
+            .summary-card { padding: 20px 16px; }
+            .summary-card h3 { font-size: 1rem; }
+            .summary-card p  { font-size: 0.95rem; }
+
+            .cost-block { padding: 24px; }
+            .cost-item { font-size: 1rem; }
+            .flow-item { font-size: 0.95rem; padding: 14px 0; }
+
+            .rule-block h3 { font-size: 1.1rem; }
+            .rule-block li { font-size: 0.95rem; }
+
+            .faq-item summary { font-size: 1rem; padding: 18px 20px; }
+            .faq-body { font-size: 0.95rem; padding: 16px 20px 18px; }
+
+            .staff-card { padding: 20px; }
+            .staff-card h3 { font-size: 1rem; margin-bottom: 10px; }
+            .staff-card p, .staff-card li { font-size: 0.92rem; }
+
+            .step-card { padding: 20px; gap: 16px; }
+            .step-num { width: 40px; height: 40px; min-width: 40px; font-size: 0.9rem; }
+            .step-content h3 { font-size: 1.05rem; }
+            .step-content p  { font-size: 0.92rem; }
+
+            .floating-cta {
+                left: auto;
+                right: 32px;
+                bottom: 32px;
+                width: auto;
+            }
+            .floating-cta a {
+                width: auto;
+                padding: 0 32px;
+                font-size: 0.95rem;
+                height: 52px;
+            }
+
+            h2 { font-size: 1.8rem; }
+
+            .photo-award-banner { padding: 20px; gap: 18px; }
+            .photo-award-icon { font-size: 2.4rem; }
+            .photo-award-body h3 { font-size: 1rem; }
+            .photo-award-body p { font-size: 0.92rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 固定背景（iOS Safari対応） -->
+    <div id="bg-fixed" aria-hidden="true"></div>
+
+    <!-- 背景オーブ -->
+    <div class="bg-orb bg-orb--indigo" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--pink"   aria-hidden="true"></div>
+
+    <!-- フローティングCTA -->
+    <div class="floating-cta">
+        <a href="https://forms.gle/MWekkXvjjNWUrjxE6" target="_blank" rel="noopener">☆ エントリーする ☆</a>
+    </div>
+
+    <div class="container">
+
+        <!-- ナビ（スマホ折りたたみ） -->
+        <input type="checkbox" id="nav-toggle" aria-hidden="true">
+        <label for="nav-toggle" class="nav-label">
+            メニュー
+            <span class="nav-arrow">▾</span>
+        </label>
+        <nav class="quick-nav" aria-label="ページ内ナビゲーション">
+            <a href="#top">トップ</a>
+            <a href="#schedule">日時</a>
+            <a href="#features">特徴</a>
+            <a href="#special-rules">ルール</a>
+            <a href="#fine-print">細則</a>
+            <a href="#faq">FAQ</a>
+            <a href="#staff">運営</a>
+            <a href="#entry">参加方法</a>
+        </nav>
+
+        <!-- ===== ヘッダー ===== -->
+        <header id="top" class="header-wrap">
+            <p class="kicker">MUSHADON CUP</p>
+            <h1 class="gradient-text">むしゃどん杯</h1>
+            <p class="header-sub">一夜限りの仲間とブキコスト制大会</p>
+            <p class="header-desc">
+                スプラトゥーンが好きな新入生・在学生向けの交流大会。<br>
+                独自の武器コストルールで、カジュアルさと競技性を両立。
+            </p>
+            <div class="cta-wrap">
+                <a href="#entry" class="btn btn-primary">参加方法を見る</a>
+                <a href="#special-rules" class="btn btn-secondary">ルールを見る</a>
+                <a href="#faq" class="btn btn-secondary">よくある質問</a>
+            </div>
+        </header>
+
+        <!-- ===== スケジュール ===== -->
+        <section id="schedule" class="card card-pad border-pink section-gap">
+            <p class="kicker">Schedule</p>
+            <h2 style="margin-bottom:16px;">開催日時</h2>
+            <p class="schedule-date gradient-text">2026年4月4日（土）</p>
+            <div class="schedule-grid">
+                <div class="schedule-item schedule-item--a">20:00<br>集合・顔合わせ</div>
+                <div class="schedule-item schedule-item--b">21:00<br>試合開始</div>
+            </div>
+            <p style="font-size:0.87rem; color:var(--c-muted); text-align:center;">
+                個人エントリー形式で気軽に参加できます。<br>
+                チーム発表は当日昼頃を予定しています。
+            </p>
+        </section>
+
+        <!-- ===== 特徴 ===== -->
+        <section id="features" class="section-gap">
+            <div style="text-align:center; margin-bottom:16px;">
+                <p class="kicker">Features</p>
+                <h2>大会の特徴</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <p class="feature-num">01</p>
+                    <h3>武器コスト制</h3>
+                    <p>編成段階から戦略が生まれる独自ルール。</p>
+                </div>
+                <div class="feature-card">
+                    <p class="feature-num">02</p>
+                    <h3>逆転チャンス</h3>
+                    <p>2本先取で負けてもハンデで逆転の余地あり。</p>
+                </div>
+                <div class="feature-card">
+                    <p class="feature-num">03</p>
+                    <h3>個人参加OK</h3>
+                    <p>新歓向けなのでチームなしでも安心。</p>
+                </div>
+                <div class="feature-card">
+                    <p class="feature-num">04</p>
+                    <h3>実況配信あり</h3>
+                    <p>実況・解説つきで観戦も楽しめます。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== サマリー ===== -->
+        <section class="section-gap">
+            <div class="summary-row">
+                <div class="summary-card">
+                    <h3>ルール</h3>
+                    <p>ガチヤグラ<br>（おまかせ）</p>
+                </div>
+                <div class="summary-card">
+                    <h3>エントリー</h3>
+                    <p>個人<br><span style="font-size:0.75rem;">（運営チーム分け）</span></p>
+                </div>
+                <div class="summary-card">
+                    <h3>XP制限</h3>
+                    <p class="gradient-text" style="font-size:1.1rem; font-weight:900; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background: var(--c-grad); background-clip:text;">なし！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== コスト制ルール ===== -->
+        <section id="special-rules" class="card card-pad section-gap">
+            <p class="kicker">Special Rules</p>
+            <h2 style="margin-bottom:16px;">特殊ルール：コスト制</h2>
+
+            <div style="margin-bottom:16px;">
+                <img src="my-image(15).png"
+                     alt="各武器のコスト一覧表"
+                     loading="lazy"
+                     style="width:100%; border-radius:var(--radius-sm); border:1px solid var(--c-border);">
+            </div>
+
+            <div class="cost-block">
+                <h3 class="text-pink">編成コスト制限</h3>
+                <div class="cost-item">
+                    <span class="badge badge--pink">18</span>
+                    <div><strong>基本編成：</strong> 合計コスト18以下（上位2人の合計が9以下）</div>
+                </div>
+                <div class="cost-item" style="margin-bottom:0;">
+                    <span class="badge badge--indigo">22</span>
+                    <div><strong>強化編成：</strong> 合計コスト22以下（上位2人の合計が11以下）</div>
+                </div>
+            </div>
+
+            <div class="flow-list">
+                <h3 class="text-indigo">試合の流れ（2本先取）</h3>
+                <div class="flow-item">
+                    <span class="flow-num">1</span>
+                    <div><strong>第1試合：</strong> コスト18 vs 18</div>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-num">2</span>
+                    <div><strong>第2試合：</strong> 直前の<span class="text-red">敗北チーム</span>のみコスト22が解禁</div>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-num">3</span>
+                    <div><strong>第3試合：</strong> 1勝1敗の場合、両チームコスト22で決戦</div>
+                </div>
+            </div>
+
+            <div class="cost-block" style="margin-top:14px; margin-bottom:0;">
+                <h3 class="text-yellow">⚠ ブキ再使用制限</h3>
+                <div class="cost-item" style="margin-bottom:0;">
+                    <div>同一マッチ内で、同じプレイヤーが<strong>同系統のブキを重複して使用することは禁止</strong>です。<br>
+                    <span class="text-pink" style="font-size:0.85em;">例：スシ → スシコラ・スシ煌 はすべて同系統</span><br>
+                    <span style="font-size:0.85em;">判断に迷う場合は大会前にスタッフへ確認してください。違反時は設定ミスのルールに準じます。</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 大会細則 ===== -->
+        <section id="fine-print" class="card card-pad section-gap">
+            <p class="kicker">Rules</p>
+            <h2 style="margin-bottom:20px;">大会細則</h2>
+
+            <div class="rule-block">
+                <h3>進行ルール</h3>
+                <ul>
+                    <li>運営配信卓の試合は「かんせんカメラ」の合流を必ず確認してください。</li>
+                    <li>部屋作成後10分以内に反応がない場合、反応がなかった側の不戦敗（スコア2-0）となります。</li>
+                    <li>タイカイサポート上で試合結果を両チームリーダーが「確定」することで試合完了です。</li>
+                </ul>
+            </div>
+
+            <div class="rule-block">
+                <h3>禁止事項・ペナルティ</h3>
+                <ul>
+                    <li>ゲーム性を損なう行為・差別的言動・誹謗中傷等が悪質と判断された場合、大会失格となります。</li>
+                </ul>
+            </div>
+
+            <div class="rule-block">
+                <h3>ギアパワー制限</h3>
+                <ul>
+                    <li>「基本ギアパワーのみ」オフ（サブギアあり）</li>
+                </ul>
+            </div>
+
+            <div class="rule-block">
+                <h3>回線・ラグ</h3>
+                <ul>
+                    <li><strong>試合開始後30秒以内</strong>の回線落ちは、同条件で再試合。</li>
+                    <li><strong>試合開始後31秒以降</strong>の回線落ちは試合続行（再試合なし）。</li>
+                    <li>ラグは基本対応しません。「#むしゃどん杯」でつぶやくと後日面白賞が授与されるかも？</li>
+                    <li>意図的なラグが疑われる場合は、動画などを添えて運営に報告してください。</li>
+                </ul>
+            </div>
+
+            <div class="rule-block" style="margin-bottom:0;">
+                <h3>設定ミス</h3>
+                <ul>
+                    <li><strong>ルールミス：</strong>再試合は同ステージ、ギア・ブキ変更<span class="text-red">不可</span>。</li>
+                    <li><strong>ステージミス：</strong>再試合は正ステージ、ギア・ブキ変更<span class="text-green">可能</span>。</li>
+                    <li><strong>1回目発覚：</strong>発覚タイミング問わず無効試合・再戦。</li>
+                    <li><strong>2回目（同チーム）：</strong>誤った側の1敗。</li>
+                    <li><strong>編成ミスの申告：</strong>相手の違反に気づいた場合、次試合開始までにスタッフへ申告すると当該試合を申告側の1勝とします。</li>
+                    <li><strong>申告方法：</strong>スタッフルームのVCにて報告してください。</li>
+                </ul>
+            </div>
+
+            <!-- 写真賞バナー -->
+            <div class="photo-award-banner">
+                <div class="photo-award-icon">📸</div>
+                <div class="photo-award-body">
+                    <h3>🏆 写真賞</h3>
+                    <p>
+                        大会中にチームメンバーで撮影した<strong>記念写真を投稿してくれたチーム</strong>の中から、
+                        運営が1チームを<span class="text-yellow">「写真賞」</span>として選出します。<br>
+                        選ばれたチームには<strong>イラストを贈呈</strong>します！<br>
+                        <span style="font-size:0.82rem; margin-top:4px; display:block;">Discordサーバー内の <strong>#むしゃどん杯記念写真</strong> チャンネルに写真を投稿してください。</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section id="faq" class="card card-pad section-gap">
+            <p class="kicker">FAQ</p>
+            <h2 style="margin-bottom:16px;">よくある質問</h2>
+
+            <details class="faq-item">
+                <summary>初心者でも参加できますか？</summary>
+                <div class="faq-body">参加できます。新歓向けの交流大会なので、気軽な参加が一番歓迎です。</div>
+            </details>
+
+            <details class="faq-item">
+                <summary>ブキを全部持っていなくても大丈夫？</summary>
+                <div class="faq-body">すべてのブキを所持していなくても問題ありません。</div>
+            </details>
+
+            <details class="faq-item">
+                <summary>準備しておくことは？</summary>
+                <div class="faq-body">スマホに Nintendo Switch アプリをダウンロードしておいてください！</div>
+            </details>
+
+            <details class="faq-item">
+                <summary>強くないけど大丈夫？</summary>
+                <div class="faq-body">もちろん大丈夫！パワー差が偏りすぎないよう運営側でチームを編成します！</div>
+            </details>
+
+            <details class="faq-item">
+                <summary>「同系統のブキ」とは具体的にどの範囲ですか？</summary>
+                <div class="faq-body">
+                    武器名の共通部分（ベース名）が同じものが同系統です。例として、スプラシューター・スプラシューターコラボ・スプラシューター煌はすべて同系統です。判断に迷う場合は試合前にスタッフへ確認してください。
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>写真賞はどうやって応募するの？</summary>
+                <div class="faq-body">
+                    チームメンバーで撮った記念写真を、Discordサーバー内の <strong>#むしゃどん杯記念写真</strong> チャンネルに投稿するだけです！複数枚投稿してもOK。選考は運営が行い、結果は大会後に発表します。
+                </div>
+            </details>
+        </section>
+
+        <!-- ===== 運営 ===== -->
+        <section id="staff" class="section-gap">
+            <div class="staff-grid">
+                <div class="staff-card">
+                    <h3>配信</h3>
+                    <p><span class="text-indigo">実況：</span>むしゃどん</p>
+                    <p style="margin-top:4px;"><span class="text-pink">解説：</span>みなづき</p>
+                </div>
+                <div class="staff-card">
+                    <h3>運営スタッフ</h3>
+                    <ul>
+                        <li>企画・運営：むしゃどん</li>
+                        <li>カメラ・配信：空白</li>
+                        <li>サーバー管理：げん</li>
+                    </ul>
+                </div>
+                <div class="staff-card" style="grid-column: 1 / -1;">
+                    <h3>協力</h3>
+                    <ul>
+                        <li>Tonepaints</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== エントリー ===== -->
+        <section id="entry" class="card card-pad border-indigo section-gap">
+            <p class="kicker">Entry</p>
+            <h2 style="margin-bottom:16px;">参加方法</h2>
+
+            <div class="entry-steps">
+                <div class="step-card">
+                    <div class="step-num step-num--req">必須</div>
+                    <div class="step-content">
+                        <p class="tag-opt">STEP 1</p>
+                        <h3>新歓サーバーに参加！</h3>
+                        <p>Discordの新歓サーバーに参加してください</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-num step-num--req">必須</div>
+                    <div class="step-content">
+                        <p class="tag-opt">STEP 2</p>
+                        <h3>エントリー</h3>
+                        <p>下記フォームから参加申請してください。</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-num step-num--day">当日</div>
+                    <div class="step-content">
+                        <p class="tag-opt">STEP 3</p>
+                        <h3>20:00 集合</h3>
+                        <p>ロビーのボイスチャットへ参加してください。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center;">
+                <a href="https://forms.gle/MWekkXvjjNWUrjxE6" class="btn btn-primary" style="display:inline-flex; width:100%;">
+                    ☆ 参加申し込みはこちら ☆
+                </a>
+                <p style="font-size:0.8rem; color:var(--c-muted); margin-top:10px;">
+                    送ったか気になる場合はむしゃどんにDMください。
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== フッター ===== -->
+        <footer class="footer">
+            <p>
+                個人主催の大会です。この大会は任天堂の協賛・提携を受けたものではありません。<br>
+                (<a href="https://www.nintendo.co.jp/tournament_guideline/rules.html">コミュニティ大会への出場および観戦に関する規約</a>)
+            </p>
+            <p style="margin-top:8px;">&copy; 2026 Mushadon Cup. All rights reserved.</p>
+        </footer>
+
+    </div><!-- /container -->
+
+</body>
+</html>
