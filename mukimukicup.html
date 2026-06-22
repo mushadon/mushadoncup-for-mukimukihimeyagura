@@ -1,13 +1,18 @@
+ご提示いただいたHTMLの「ブキコスト制」に関する記述を、ご要望の「ムキムキ姫ヤグラ」のルールに全面的に書き換えました。
+
+タイトルやメタタグ、特徴の項目から特殊ルール、細則に至るまで、新しいルールに合わせて調整を行っています。以下のHTMLコードをそのままコピーしてご利用ください。
+
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>むしゃどん杯 | ブキコスト制大会</title>
+    <title>むしゃどん杯 | ムキムキ姫ヤグラ大会</title>
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="むしゃどん杯 | ブキコスト制大会">
-    <meta property="og:description" content="独自のブキコスト制ルールを採用したスプラトゥーン3大会！4月4日開催。">
+    <meta property="og:title" content="むしゃどん杯 | ムキムキ姫ヤグラ大会">
+    <meta property="og:description" content="姫ヤグラ×筋トレの独自ルールを採用したスプラトゥーン3大会！6月4日開催。">
     <meta property="og:image" content="https://mushadon.github.io/mushadoncup-for-spring/mushadon杯七大学.jpg">
 
     <!-- Google Fonts: 軽量サブセット -->
@@ -326,6 +331,7 @@
         }
         .badge--pink   { background: #db2777; }
         .badge--indigo { background: #4f46e5; }
+        .badge--yellow { background: #d97706; }
 
         .flow-list {
             background: rgba(10,10,25,0.5);
@@ -679,10 +685,10 @@
         <header id="top" class="header-wrap">
             <p class="kicker">MUSHADON CUP</p>
             <h1 class="gradient-text">むしゃどん杯</h1>
-            <p class="header-sub">一夜限りの仲間とブキコスト制大会</p>
+            <p class="header-sub">一夜限りの仲間とムキムキ姫ヤグラ大会</p>
             <p class="header-desc">
                 スプラトゥーンが好きな新入生・在学生向けの交流大会。<br>
-                独自の武器コストルールで、カジュアルさと競技性を両立。
+                姫ヤグラ×筋トレの独自ルールで、カジュアルさと熱狂を両立。
             </p>
             <div class="cta-wrap">
                 <a href="#entry" class="btn btn-primary">参加方法を見る</a>
@@ -695,14 +701,13 @@
         <section id="schedule" class="card card-pad border-pink section-gap">
             <p class="kicker">Schedule</p>
             <h2 style="margin-bottom:16px;">開催日時</h2>
-            <p class="schedule-date gradient-text">2026年4月4日（土）</p>
+            <p class="schedule-date gradient-text">6月4日（土）</p>
             <div class="schedule-grid">
                 <div class="schedule-item schedule-item--a">20:00<br>集合・顔合わせ</div>
                 <div class="schedule-item schedule-item--b">21:00<br>試合開始</div>
             </div>
             <p style="font-size:0.87rem; color:var(--c-muted); text-align:center;">
-                個人エントリー形式で気軽に参加できます。<br>
-                チーム発表は当日昼頃を予定しています。
+                オンライン開催となります。
             </p>
         </section>
 
@@ -715,23 +720,23 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <p class="feature-num">01</p>
-                    <h3>武器コスト制</h3>
-                    <p>編成段階から戦略が生まれる独自ルール。</p>
+                    <h3>ムキムキ姫ヤグラ</h3>
+                    <p>ヤグラに乗れるのは「姫」だけ！騎士は姫を守り抜け。</p>
                 </div>
                 <div class="feature-card">
                     <p class="feature-num">02</p>
-                    <h3>逆転チャンス</h3>
-                    <p>2本先取で負けてもハンデで逆転の余地あり。</p>
+                    <h3>筋トレ必須</h3>
+                    <p>姫を倒した/倒されたプレイヤーは定められた運動のペナルティ！</p>
                 </div>
                 <div class="feature-card">
                     <p class="feature-num">03</p>
-                    <h3>個人参加OK</h3>
-                    <p>新歓向けなのでチームなしでも安心。</p>
+                    <h3>BO2総当たり</h3>
+                    <p>2本勝負の総当たり戦でオンラインバトル。</p>
                 </div>
                 <div class="feature-card">
                     <p class="feature-num">04</p>
-                    <h3>実況配信あり</h3>
-                    <p>実況・解説つきで観戦も楽しめます。</p>
+                    <h3>ハンデキャップ</h3>
+                    <p>パワーの高いプレイヤーには武器指定のハンデがあるかも？</p>
                 </div>
             </div>
         </section>
@@ -741,66 +746,72 @@
             <div class="summary-row">
                 <div class="summary-card">
                     <h3>ルール</h3>
-                    <p>ガチヤグラ<br>（おまかせ）</p>
+                    <p>ガチヤグラ<br>（全ステージおまかせ・ロスト）</p>
                 </div>
                 <div class="summary-card">
-                    <h3>エントリー</h3>
-                    <p>個人<br><span style="font-size:0.75rem;">（運営チーム分け）</span></p>
+                    <h3>試合形式</h3>
+                    <p>BO2<br><span style="font-size:0.75rem;">（総当たり戦）</span></p>
                 </div>
                 <div class="summary-card">
-                    <h3>XP制限</h3>
-                    <p class="gradient-text" style="font-size:1.1rem; font-weight:900; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background: var(--c-grad); background-clip:text;">なし！</p>
+                    <h3>ブキ制限</h3>
+                    <p class="gradient-text" style="font-size:1.1rem; font-weight:900; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background: var(--c-grad); background-clip:text;">強者は指定あり</p>
                 </div>
             </div>
         </section>
 
-        <!-- ===== コスト制ルール ===== -->
+        <!-- ===== 特殊ルール ===== -->
         <section id="special-rules" class="card card-pad section-gap">
             <p class="kicker">Special Rules</p>
-            <h2 style="margin-bottom:16px;">特殊ルール：コスト制</h2>
-
-            <div style="margin-bottom:16px;">
-                <img src="my-image(15).png"
-                     alt="各武器のコスト一覧表"
-                     loading="lazy"
-                     style="width:100%; border-radius:var(--radius-sm); border:1px solid var(--c-border);">
-            </div>
+            <h2 style="margin-bottom:16px;">特殊ルール：ムキムキ姫ヤグラ</h2>
 
             <div class="cost-block">
-                <h3 class="text-pink">編成コスト制限</h3>
+                <h3 class="text-pink">姫ヤグラの基本ルール</h3>
                 <div class="cost-item">
-                    <span class="badge badge--pink">18</span>
-                    <div><strong>基本編成：</strong> 合計コスト18以下（上位2人の合計が9以下）</div>
+                    <span class="badge badge--pink">姫</span>
+                    <div><strong>ヤグラ搭乗権：</strong> ヤグラに乗れるのはチーム内の「姫」のみです。スーパージャンプでヤグラ上の姫に飛ぶ際は一旦ヤグラから降りてください。</div>
+                </div>
+                <div class="cost-item">
+                    <span class="badge badge--yellow">名</span>
+                    <div><strong>プレイヤー名：</strong> 姫のみ、名前の前に「ヒメ」と明記してください。</div>
                 </div>
                 <div class="cost-item" style="margin-bottom:0;">
-                    <span class="badge badge--indigo">22</span>
-                    <div><strong>強化編成：</strong> 合計コスト22以下（上位2人の合計が11以下）</div>
+                    <span class="badge badge--indigo">罰</span>
+                    <div><strong>騎士の搭乗違反：</strong> 騎士がヤグラに乗った場合、申告があればメモリープレイヤー等で判定し、その試合は1本失います。</div>
                 </div>
             </div>
 
             <div class="flow-list">
-                <h3 class="text-indigo">試合の流れ（2本先取）</h3>
+                <h3 class="text-indigo">運動ペナルティ（各試合ごと）</h3>
+                <p style="font-size:0.85rem; color:var(--c-muted); margin-bottom:10px;">姫を倒した場合、または姫に倒された場合、当事者は以下の運動を<strong>10回</strong>行います。</p>
                 <div class="flow-item">
                     <span class="flow-num">1</span>
-                    <div><strong>第1試合：</strong> コスト18 vs 18</div>
+                    <div><strong>一回戦：</strong> 腕立て伏せ <span class="text-pink">（姫に倒された際は 腹筋）</span></div>
                 </div>
                 <div class="flow-item">
                     <span class="flow-num">2</span>
-                    <div><strong>第2試合：</strong> 直前の<span class="text-red">敗北チーム</span>のみコスト22が解禁</div>
+                    <div><strong>二回戦：</strong> 腹筋 <span class="text-pink">（姫に倒された際は スクワット）</span></div>
                 </div>
                 <div class="flow-item">
                     <span class="flow-num">3</span>
-                    <div><strong>第3試合：</strong> 1勝1敗の場合、両チームコスト22で決戦</div>
+                    <div><strong>三回戦：</strong> スクワット <span class="text-pink">（姫に倒された際は レッグレイズ）</span></div>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-num">4</span>
+                    <div><strong>四回戦：</strong> レッグレイズ <span class="text-pink">（姫に倒された際は ランジ）</span></div>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-num">5</span>
+                    <div><strong>五回戦：</strong> ランジ <span class="text-pink">（姫に倒された際は 腕立て伏せ）</span></div>
                 </div>
             </div>
 
             <div class="cost-block" style="margin-top:14px; margin-bottom:0;">
-                <h3 class="text-yellow">⚠ ブキ再使用制限</h3>
+                <h3 class="text-yellow">⚠ 禁止事項・制限</h3>
+                <div class="cost-item">
+                    <div><strong>ギア・サブ制限：</strong> ゾンビギア（復活時間短縮）およびエナジースタンドの使用は禁止です。</div>
+                </div>
                 <div class="cost-item" style="margin-bottom:0;">
-                    <div>同一マッチ内で、同じプレイヤーが<strong>同系統のブキを重複して使用することは禁止</strong>です。<br>
-                    <span class="text-pink" style="font-size:0.85em;">例：スシ → スシコラ・スシ煌 はすべて同系統</span><br>
-                    <span style="font-size:0.85em;">判断に迷う場合は大会前にスタッフへ確認してください。違反時は設定ミスのルールに準じます。</span>
-                    </div>
+                    <div><strong>武器指定：</strong> パワーの高いプレイヤーには、運営から武器を指定される場合があります。</div>
                 </div>
             </div>
         </section>
@@ -811,11 +822,17 @@
             <h2 style="margin-bottom:20px;">大会細則</h2>
 
             <div class="rule-block">
+                <h3>表彰・景品について</h3>
+                <ul>
+                    <li>本大会に物理的な景品はありませんが、<strong>優勝チームは「むしゃどん」のX（旧Twitter）アカウントにて大々的に表彰</strong>されます！</li>
+                </ul>
+            </div>
+
+            <div class="rule-block">
                 <h3>進行ルール</h3>
                 <ul>
-                    <li>運営配信卓の試合は「かんせんカメラ」の合流を必ず確認してください。</li>
+                    <li>試合はオンラインにて、<strong>BO2（2本先取ではなく、2試合固定）の総当たり戦</strong>で行われます。</li>
                     <li>部屋作成後10分以内に反応がない場合、反応がなかった側の不戦敗（スコア2-0）となります。</li>
-                    <li>タイカイサポート上で試合結果を両チームリーダーが「確定」することで試合完了です。</li>
                 </ul>
             </div>
 
@@ -827,18 +844,10 @@
             </div>
 
             <div class="rule-block">
-                <h3>ギアパワー制限</h3>
-                <ul>
-                    <li>「基本ギアパワーのみ」オフ（サブギアあり）</li>
-                </ul>
-            </div>
-
-            <div class="rule-block">
                 <h3>回線・ラグ</h3>
                 <ul>
                     <li><strong>試合開始後30秒以内</strong>の回線落ちは、同条件で再試合。</li>
                     <li><strong>試合開始後31秒以降</strong>の回線落ちは試合続行（再試合なし）。</li>
-                    <li>ラグは基本対応しません。「#むしゃどん杯」でつぶやくと後日面白賞が授与されるかも？</li>
                     <li>意図的なラグが疑われる場合は、動画などを添えて運営に報告してください。</li>
                 </ul>
             </div>
@@ -850,23 +859,7 @@
                     <li><strong>ステージミス：</strong>再試合は正ステージ、ギア・ブキ変更<span class="text-green">可能</span>。</li>
                     <li><strong>1回目発覚：</strong>発覚タイミング問わず無効試合・再戦。</li>
                     <li><strong>2回目（同チーム）：</strong>誤った側の1敗。</li>
-                    <li><strong>編成ミスの申告：</strong>相手の違反に気づいた場合、次試合開始までにスタッフへ申告すると当該試合を申告側の1勝とします。</li>
-                    <li><strong>申告方法：</strong>スタッフルームのVCにて報告してください。</li>
                 </ul>
-            </div>
-
-            <!-- 写真賞バナー -->
-            <div class="photo-award-banner">
-                <div class="photo-award-icon">📸</div>
-                <div class="photo-award-body">
-                    <h3>🏆 写真賞</h3>
-                    <p>
-                        大会中にチームメンバーで撮影した<strong>記念写真を投稿してくれたチーム</strong>の中から、
-                        運営が1チームを<span class="text-yellow">「写真賞」</span>として選出します。<br>
-                        選ばれたチームには<strong>イラストを贈呈</strong>します！<br>
-                        <span style="font-size:0.82rem; margin-top:4px; display:block;">Discordサーバー内の <strong>#むしゃどん杯記念写真</strong> チャンネルに写真を投稿してください。</span>
-                    </p>
-                </div>
             </div>
         </section>
 
@@ -881,31 +874,26 @@
             </details>
 
             <details class="faq-item">
-                <summary>ブキを全部持っていなくても大丈夫？</summary>
-                <div class="faq-body">すべてのブキを所持していなくても問題ありません。</div>
-            </details>
-
-            <details class="faq-item">
                 <summary>準備しておくことは？</summary>
-                <div class="faq-body">スマホに Nintendo Switch アプリをダウンロードしておいてください！</div>
+                <div class="faq-body">スマホに Nintendo Switch アプリをダウンロードし、通話アプリ（Discord等）の準備をお願いします。</div>
             </details>
 
             <details class="faq-item">
                 <summary>強くないけど大丈夫？</summary>
-                <div class="faq-body">もちろん大丈夫！パワー差が偏りすぎないよう運営側でチームを編成します！</div>
+                <div class="faq-body">もちろん大丈夫です。パワーの高い人には武器指定のハンデがあるため、ワイワイ楽しめます！</div>
             </details>
 
             <details class="faq-item">
-                <summary>「同系統のブキ」とは具体的にどの範囲ですか？</summary>
+                <summary>「騎士がヤグラに乗った」かどうかの判定はどうなりますか？</summary>
                 <div class="faq-body">
-                    武器名の共通部分（ベース名）が同じものが同系統です。例として、スプラシューター・スプラシューターコラボ・スプラシューター煌はすべて同系統です。判断に迷う場合は試合前にスタッフへ確認してください。
+                    基本は参加者の自己申告とスポーツマンシップに委ねられます。疑義がある場合はメモリープレイヤーでの確認を行います。
                 </div>
             </details>
 
             <details class="faq-item">
-                <summary>写真賞はどうやって応募するの？</summary>
+                <summary>運動は本当にやらないといけないの？</summary>
                 <div class="faq-body">
-                    チームメンバーで撮った記念写真を、Discordサーバー内の <strong>#むしゃどん杯記念写真</strong> チャンネルに投稿するだけです！複数枚投稿してもOK。選考は運営が行い、結果は大会後に発表します。
+                    はい！カメラをオンにする必要はありませんが、通話越しに息を上げる声を聞かせ合って楽しみましょう！
                 </div>
             </details>
         </section>
@@ -990,3 +978,4 @@
 
 </body>
 </html>
+```
