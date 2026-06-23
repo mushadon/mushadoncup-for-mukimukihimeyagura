@@ -9,9 +9,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="むしゃどん杯 | ムキムキ姫ヤグラ大会">
     <meta property="og:description" content="姫ヤグラ×筋トレの独自ルールを採用したスプラトゥーン3大会！6月4日開催。">
-   
+    
 
-    <!-- Google Fonts: 軽量サブセット -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -22,10 +21,10 @@
 
         :root {
             --c-bg: #1e1e2e;
-            --c-surface: rgba(30, 30, 50, 0.85);
-            --c-border: rgba(255,255,255,0.10);
+            --c-surface: rgba(25, 25, 40, 0.92); /* 背景白対応：視認性向上のため不透明度をアップ */
+            --c-border: rgba(255,255,255,0.12);
             --c-text: #e8e8f0;
-            --c-muted: #a0a0b8;
+            --c-muted: #b3b3cb; /* 背景白対応：少し明るくして可読性を確保 */
             --c-indigo: #818cf8;
             --c-pink: #f472b6;
             --c-grad: linear-gradient(90deg, #818cf8, #f472b6);
@@ -54,10 +53,17 @@
             background-image: url("hime2.png");
             background-position: center top;
             background-repeat: no-repeat;
-            /* 画面全体を綺麗に覆うよう cover に変更（横幅にも合います） */
             background-size: cover;
             background-color: var(--c-bg);
             pointer-events: none;
+        }
+
+        /* 背景白対応：画像が白くても文字や orb が見えるよう、画像の上に暗いマスクを重ねる */
+        #bg-fixed::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(30, 30, 46, 0.75);
         }
 
         /* ===== 背景レイヤー（軽量化: blur削減） ===== */
@@ -81,8 +87,8 @@
             background: var(--c-surface);
             border: 1px solid var(--c-border);
             border-radius: var(--radius);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .card-pad { padding: 20px var(--pad); }
 
@@ -114,7 +120,7 @@
             display: flex; align-items: center; gap: 6px;
             cursor: pointer;
             padding: 10px 18px;
-            background: rgba(0,0,0,0.45);
+            background: rgba(10, 10, 20, 0.75); /* 背景白対応：視認性向上 */
             border: 1px solid var(--c-border);
             border-radius: 9999px;
             width: fit-content;
@@ -151,7 +157,7 @@
             min-height: 44px;
             padding: 10px 8px;
             border-radius: var(--radius-sm);
-            background: rgba(0,0,0,0.35);
+            background: rgba(10, 10, 20, 0.65); /* 背景白対応：視認性向上 */
             color: var(--c-text);
             text-decoration: none;
             border: 1px solid var(--c-border);
@@ -163,14 +169,14 @@
 
         /* ===== ヘッダー ===== */
         .header-wrap {
-            background: rgba(0,0,0,0.4);
+            background: rgba(15, 15, 25, 0.65); /* 背景白対応：不透明度を調整 */
             border: 1px solid var(--c-border);
             border-radius: var(--radius);
             padding: 24px 16px;
             text-align: center;
             margin-bottom: var(--section-gap);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
 
         .header-wrap h1 {
@@ -216,11 +222,11 @@
         .btn-primary {
             background: var(--c-grad);
             color: #fff;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
         .btn-secondary {
-            background: rgba(0,0,0,0.3);
+            background: rgba(10, 10, 20, 0.5); /* 背景白対応 */
             border: 1px solid var(--c-border);
             color: var(--c-text);
         }
@@ -252,8 +258,8 @@
             font-size: 0.9rem;
         }
 
-        .schedule-item--a { background: rgba(55,55,80,0.6); }
-        .schedule-item--b { background: rgba(49,46,129,0.4); color: #a5b4fc; }
+        .schedule-item--a { background: rgba(55,55,80,0.8); } /* 背景白対応：視認性向上 */
+        .schedule-item--b { background: rgba(49,46,129,0.6); color: #c7d2fe; } /* 背景白対応 */
 
         /* ===== 特徴グリッド ===== */
         .features-grid {
@@ -265,7 +271,7 @@
         .feature-card {
             padding: 16px 14px;
             border-radius: var(--radius-sm);
-            background: rgba(30,30,50,0.7);
+            background: var(--c-surface); /* 背景白対応：共通サーフェスに変更して黒を担保 */
             border: 1px solid var(--c-border);
         }
 
@@ -290,7 +296,7 @@
         .summary-card {
             padding: 14px 10px;
             border-radius: var(--radius-sm);
-            background: rgba(20,20,40,0.55);
+            background: rgba(15,15,30,0.85); /* 背景白対応 */
             border: 1px solid var(--c-border);
         }
         .summary-card h3 { font-size: 0.82rem; margin-bottom: 4px; }
@@ -298,7 +304,7 @@
 
         /* ===== コストルール ===== */
         .cost-block {
-            background: rgba(20,20,40,0.6);
+            background: rgba(15,15,30,0.7); /* 背景白対応 */
             border-radius: var(--radius-sm);
             padding: 16px;
             margin-bottom: 14px;
@@ -331,7 +337,7 @@
         .badge--yellow { background: #d97706; }
 
         .flow-list {
-            background: rgba(10,10,25,0.5);
+            background: rgba(10,10,25,0.7); /* 背景白対応 */
             border-radius: var(--radius-sm);
             padding: 16px;
         }
@@ -350,23 +356,23 @@
         .flow-num {
             display: flex; align-items: center; justify-content: center;
             width: 26px; height: 26px; min-width: 26px;
-            background: rgba(129,140,248,0.15);
+            background: rgba(129,140,248,0.2); /* 背景白対応 */
             border: 1px solid #818cf8;
             border-radius: 50%;
             font-size: 0.78rem;
             font-weight: 800;
-            color: #818cf8;
+            color: #a5b4fc; /* 背景白対応 */
         }
 
         .text-red    { color: #f87171; }
         .text-green  { color: #4ade80; }
-        .text-indigo { color: #a5b4fc; }
+        .text-indigo { color: #c7d2fe; } /* 背景白対応 */
         .text-pink   { color: #f9a8d4; }
         .text-yellow { color: #fbbf24; }
 
         /* ===== 細則 ===== */
         .rule-block { margin-bottom: 18px; }
-        .rule-block h3 { font-size: 1rem; margin-bottom: 8px; color: var(--c-indigo); }
+        .rule-block h3 { font-size: 1rem; margin-bottom: 8px; color: #a5b4fc; } /* 背景白対応 */
         .rule-block ul {
             list-style: none; padding: 0;
             display: flex; flex-direction: column; gap: 8px;
@@ -403,7 +409,7 @@
             justify-content: space-between;
             gap: 8px;
             min-height: 48px;
-            background: rgba(20,20,40,0.5);
+            background: rgba(20,20,40,0.7); /* 背景白対応 */
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
@@ -422,7 +428,7 @@
             font-size: 0.87rem;
             color: var(--c-muted);
             line-height: 1.75;
-            background: rgba(10,10,25,0.4);
+            background: rgba(10,10,25,0.6); /* 背景白対応 */
         }
 
         /* ===== スタッフ ===== */
@@ -435,7 +441,7 @@
         .staff-card {
             padding: 14px;
             border-radius: var(--radius-sm);
-            background: rgba(20,20,40,0.55);
+            background: rgba(20,20,40,0.8); /* 背景白対応 */
             border: 1px solid var(--c-border);
         }
         .staff-card h3 { font-size: 0.9rem; margin-bottom: 8px; }
@@ -454,7 +460,7 @@
             display: flex; gap: 12px; align-items: flex-start;
             padding: 14px;
             border-radius: var(--radius-sm);
-            background: rgba(15,15,35,0.5);
+            background: rgba(15,15,35,0.7); /* 背景白対応 */
             border: 1px solid var(--c-border);
         }
 
@@ -465,16 +471,16 @@
             font-weight: 900;
             font-size: 0.85rem;
         }
-        .step-num--opt { background: rgba(100,100,120,0.4); color: var(--c-muted); }
+        .step-num--opt { background: rgba(100,100,120,0.6); color: var(--c-text); } /* 背景白対応 */
         .step-num--req { background: var(--c-grad); color: #fff; }
-        .step-num--day { background: rgba(244,114,182,0.2); border: 1px solid #f472b6; color: #f9a8d4; }
+        .step-num--day { background: rgba(244,114,182,0.3); border: 1px solid #f472b6; color: #fff; } /* 背景白対応 */
 
         .step-content h3 { font-size: 0.95rem; margin-bottom: 4px; }
         .step-content p  { font-size: 0.85rem; color: var(--c-muted); line-height: 1.65; }
 
         .tag-opt { font-size: 0.72rem; color: var(--c-muted); margin-bottom: 2px; }
 
-        /* ===== フローティングCTA ===== */
+        /* ===== フフローティングCTA ===== */
         .floating-cta {
             position: fixed;
             left: 12px; right: 12px; bottom: 12px;
@@ -490,7 +496,7 @@
             color: #fff;
             text-decoration: none;
             background: var(--c-grad);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
         }
         .floating-cta a:active { opacity: 0.85; }
 
@@ -499,7 +505,7 @@
             text-align: center;
             margin-top: 32px;
             padding: 18px 14px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(10, 10, 20, 0.75); /* 背景白対応 */
             border: 1px solid var(--c-border);
             border-radius: var(--radius);
             font-size: 0.78rem;
@@ -510,8 +516,8 @@
         .footer a { color: inherit; text-decoration: underline; }
 
         /* ===== ピンクボーダー強調 ===== */
-        .border-pink { border-color: rgba(244, 114, 182, 0.4) !important; border-width: 2px !important; }
-        .border-indigo { border-color: rgba(129, 140, 248, 0.35) !important; border-width: 2px !important; }
+        .border-pink { border-color: rgba(244, 114, 182, 0.5) !important; border-width: 2px !important; }
+        .border-indigo { border-color: rgba(129, 140, 248, 0.5) !important; border-width: 2px !important; }
 
         /* ===== PC向け ===== */
         @media (min-width: 600px) {
@@ -612,21 +618,17 @@
 </head>
 <body>
 
-    <!-- 固定背景（iOS Safari対応） -->
     <div id="bg-fixed" aria-hidden="true"></div>
 
-    <!-- 背景オーブ -->
     <div class="bg-orb bg-orb--indigo" aria-hidden="true"></div>
     <div class="bg-orb bg-orb--pink"   aria-hidden="true"></div>
 
-    <!-- フローティングCTA -->
     <div class="floating-cta">
         <a href="https://forms.gle/MWekkXvjjNWUrjxE6" target="_blank" rel="noopener">☆ エントリーする ☆</a>
     </div>
 
     <div class="container">
 
-        <!-- ナビ（スマホ折りたたみ） -->
         <input type="checkbox" id="nav-toggle" aria-hidden="true">
         <label for="nav-toggle" class="nav-label">
             メニュー
@@ -643,7 +645,6 @@
             <a href="#entry">参加方法</a>
         </nav>
 
-        <!-- ===== ヘッダー ===== -->
         <header id="top" class="header-wrap">
             <p class="kicker">MUSHADON CUP</p>
             <h1 class="gradient-text">むしゃどん杯</h1>
@@ -659,7 +660,6 @@
             </div>
         </header>
 
-        <!-- ===== スケジュール ===== -->
         <section id="schedule" class="card card-pad border-pink section-gap">
             <p class="kicker">Schedule</p>
             <h2 style="margin-bottom:16px;">開催日時</h2>
@@ -673,7 +673,6 @@
             </p>
         </section>
 
-        <!-- ===== 特徴 ===== -->
         <section id="features" class="section-gap">
             <div style="text-align:center; margin-bottom:16px;">
                 <p class="kicker">Features</p>
@@ -695,11 +694,10 @@
                     <h3>BO2総当たり</h3>
                     <p>総当たり戦でオンラインバトル。</p>
                 </div>
-               
+                
             </div>
         </section>
 
-        <!-- ===== サマリー ===== -->
         <section class="section-gap">
             <div class="summary-row">
                 <div class="summary-card">
@@ -710,11 +708,10 @@
                     <h3>試合形式</h3>
                     <p>BO2<br><span style="font-size:0.75rem;">（総当たり戦）</span></p>
                 </div>
-               
+                
             </div>
         </section>
 
-        <!-- ===== 特殊ルール ===== -->
         <section id="special-rules" class="card card-pad section-gap">
             <p class="kicker">Special Rules</p>
             <h2 style="margin-bottom:16px;">特殊ルール：ムキムキ姫ヤグラ</h2>
@@ -765,11 +762,10 @@
                 <div class="cost-item">
                     <div><strong>スペシャル制限：</strong> エナジースタンドの使用は禁止です。</div>
                 </div>
-               
+                
             </div>
         </section>
 
-        <!-- ===== 大会細則 ===== -->
         <section id="fine-print" class="card card-pad section-gap">
             <p class="kicker">Rules</p>
             <h2 style="margin-bottom:20px;">大会細則</h2>
@@ -816,7 +812,6 @@
             </div>
         </section>
 
-        <!-- ===== FAQ ===== -->
         <section id="faq" class="card card-pad section-gap">
             <p class="kicker">FAQ</p>
             <h2 style="margin-bottom:16px;">よくある質問</h2>
@@ -851,7 +846,6 @@
             </details>
         </section>
 
-        <!-- ===== 運営 ===== -->
         <section id="staff" class="section-gap">
             <div class="staff-grid">
                 <div class="staff-card">
@@ -876,7 +870,6 @@
             </div>
         </section>
 
-        <!-- ===== エントリー ===== -->
         <section id="entry" class="card card-pad border-indigo section-gap">
             <p class="kicker">Entry</p>
             <h2 style="margin-bottom:24px;">参加方法</h2>
@@ -891,7 +884,6 @@
             </div>
         </section>
 
-        <!-- ===== フッター ===== -->
         <footer class="footer">
             <p>
                 個人主催の大会です。この大会は任天堂の協賛・提携を受けたものではありません。<br>
@@ -900,8 +892,8 @@
             <p style="margin-top:8px;">&copy; 2026 Mushadon Cup. All rights reserved.</p>
         </footer>
 
-    </div><!-- /container -->
-
-</body>
+    </div></body>
+    </html>
 </html>
+
 ```
