@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,7 +9,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="むしゃどん杯 | ムキムキ姫ヤグラ大会">
     <meta property="og:description" content="姫ヤグラ×筋トレの独自ルールを採用したスプラトゥーン3大会！6月4日開催。">
-    <meta property="og:image" content="">
+   
 
     <!-- Google Fonts: 軽量サブセット -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,9 +52,10 @@
             inset: 0;
             z-index: 0;
             background-image: url("hime2.png");
-            background-position: center center;
+            background-position: center top;
             background-repeat: no-repeat;
-            background-size: auto 100%;
+            /* 画面全体を綺麗に覆うよう cover に変更（横幅にも合います） */
+            background-size: cover;
             background-color: var(--c-bg);
             pointer-events: none;
         }
@@ -382,36 +384,6 @@
             color: #818cf8;
         }
 
-        /* ===== 写真賞バナー ===== */
-        .photo-award-banner {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            background: linear-gradient(135deg, rgba(251,191,36,0.12), rgba(244,114,182,0.10));
-            border: 1px solid rgba(251,191,36,0.35);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            margin-top: 20px;
-        }
-
-        .photo-award-icon {
-            font-size: 2rem;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-
-        .photo-award-body h3 {
-            font-size: 0.95rem;
-            color: #fbbf24;
-            margin-bottom: 6px;
-        }
-
-        .photo-award-body p {
-            font-size: 0.85rem;
-            color: var(--c-muted);
-            line-height: 1.7;
-        }
-
         /* ===== FAQ ===== */
         .faq-item {
             border: 1px solid var(--c-border);
@@ -635,11 +607,6 @@
             }
 
             h2 { font-size: 1.8rem; }
-
-            .photo-award-banner { padding: 20px; gap: 18px; }
-            .photo-award-icon { font-size: 2.4rem; }
-            .photo-award-body h3 { font-size: 1rem; }
-            .photo-award-body p { font-size: 0.92rem; }
         }
     </style>
 </head>
@@ -726,7 +693,7 @@
                 <div class="feature-card">
                     <p class="feature-num">03</p>
                     <h3>BO2総当たり</h3>
-                    <p>2本勝負の総当たり戦でオンラインバトル。</p>
+                    <p>総当たり戦でオンラインバトル。</p>
                 </div>
                
             </div>
@@ -912,14 +879,13 @@
         <!-- ===== エントリー ===== -->
         <section id="entry" class="card card-pad border-indigo section-gap">
             <p class="kicker">Entry</p>
-            <h2 style="margin-bottom:16px;">参加方法</h2>
-
+            <h2 style="margin-bottom:24px;">参加方法</h2>
 
             <div style="text-align:center;">
                 <a href="https://forms.gle/MWekkXvjjNWUrjxE6" class="btn btn-primary" style="display:inline-flex; width:100%;">
                     ☆ 参加申し込みはこちら ☆
                 </a>
-                <p style="font-size:0.8rem; color:var(--c-muted); margin-top:10px;">
+                <p style="font-size:0.8rem; color:var(--c-muted); margin-top:12px;">
                     送ったか気になる場合はむしゃどんにDMください。
                 </p>
             </div>
@@ -938,3 +904,4 @@
 
 </body>
 </html>
+```
